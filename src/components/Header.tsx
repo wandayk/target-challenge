@@ -10,24 +10,34 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export function Header() {
+interface HeaderProps {
+  activeTab: "vendas" | "estoque";
+  onTabChange: (tab: "vendas" | "estoque") => void;
+}
+
+export function Header({ activeTab, onTabChange }: HeaderProps) {
   return (
-    <header className="fixed left-0 w-full flex items-center justify-between">
-      <div className="flex mx-[10rem] w-full items-center justify-between  backdrop-blur-md nax-w-full shadow-lg border border-border rounded-4xl px-8 py-2">
-        <div className="flex">
+    <header className="fixed left-0 w-screen flex items-center justify-between z-50">
+      <div className="flex mx-[10rem] w-full items-center justify-between backdrop-blur-md max-w-full shadow-lg border border-border rounded-4xl px-8 py-2">
+        <div className="flex items-center gap-6">
           <div className="flex flex-col">
             <img src={targetLogo} alt="Target Logo" className="w-30" />
           </div>
         </div>
+        <Tabs
+          value={activeTab}
+          onValueChange={onTabChange as (value: string) => void}
+        >
+          <TabsList>
+            <TabsTrigger value="vendas">Vendas</TabsTrigger>
+            <TabsTrigger value="estoque">Estoque</TabsTrigger>
+          </TabsList>
+        </Tabs>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -48,18 +58,32 @@ export function Header() {
           <DropdownMenuContent className="" align="start">
             <DropdownMenuLabel>Contato</DropdownMenuLabel>
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <img src={linkedin} alt="logo linkedin" className="w-5" />
-                Linkedin
+              <DropdownMenuItem asChild>
+                <a
+                  href="https://www.linkedin.com/in/wandayk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 !text-accent-foreground cursor-pointer"
+                >
+                  <img src={linkedin} alt="logo linkedin" className="w-5" />
+                  Linkedin
+                </a>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <img src={github} alt="logo linkedin" className="w-5" />
-                Github
+              <DropdownMenuItem asChild>
+                <a
+                  href="https://github.com/wandayk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 !text-accent-foreground cursor-pointer"
+                >
+                  <img src={github} alt="logo github" className="w-5" />
+                  Github
+                </a>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem disabled>
-              <img src={email} alt="logo linkedin" className="w-4 mt-0.5" />
+              <img src={email} alt="logo email" className="w-4 mt-0.5" />
               wandaykc@gmail.com
             </DropdownMenuItem>
           </DropdownMenuContent>
