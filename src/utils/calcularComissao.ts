@@ -1,5 +1,5 @@
 /**
- * Calcula a comissão de uma venda seguindo as regras:
+ * regras de comissão:
  * - Abaixo de R$100,00: sem comissão
  * - Abaixo de R$500,00: 1% de comissão
  * - A partir de R$500,00: 5% de comissão

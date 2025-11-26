@@ -22,13 +22,15 @@ function App() {
       <Header activeTab={activeTab} onTabChange={handleTabChange} />
 
       <div className="flex justify-center pt-28 py-6">
-        <div className="mx-[10rem] w-full px-8">
+        <div className="mx-[0rem] w-full px-8">
           {isLoading ? (
             <div className="flex items-center justify-center py-20">
               <Spinner className="h-8 w-8" />
             </div>
+          ) : activeTab === "vendas" ? (
+            <Vendas />
           ) : (
-            activeTab === "vendas" ? <Vendas /> : <Estoque />
+            <Estoque />
           )}
         </div>
       </div>

@@ -1,9 +1,3 @@
-/**
- * Calcula juros de 2,5% ao dia sobre um valor vencido
- * @param valor Valor original
- * @param dataVencimento Data de vencimento
- * @returns Valor total com juros
- */
 export function calcularJuros(valor: number, dataVencimento: Date): number {
   const hoje = new Date();
   const diasAtraso = Math.floor(
