@@ -34,8 +34,12 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
           onValueChange={onTabChange as (value: string) => void}
         >
           <TabsList>
-            <TabsTrigger value="vendas">Vendas</TabsTrigger>
-            <TabsTrigger value="estoque">Estoque</TabsTrigger>
+            <TabsTrigger value="vendas" className="cursor-pointer">
+              Vendas
+            </TabsTrigger>
+            <TabsTrigger value="estoque" className="cursor-pointer">
+              Estoque
+            </TabsTrigger>
           </TabsList>
         </Tabs>
 

@@ -57,7 +57,7 @@ export function VendedorSheet({
                   Total de Vendas
                 </CardTitle>
                 <div className="bg-muted p-1.5 rounded">
-                  <DollarSign className="h-4 w-4 text-muted-foreground" />
+                  <DollarSign className="h-4 w-4 text-primary" />
                 </div>
               </CardHeader>
               <CardContent>
@@ -76,7 +76,7 @@ export function VendedorSheet({
                   Comissões
                 </CardTitle>
                 <div className="bg-muted p-1.5 rounded">
-                  <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                  <TrendingUp className="h-4 w-4 text-primary" />
                 </div>
               </CardHeader>
               <CardContent>
@@ -99,7 +99,7 @@ export function VendedorSheet({
                   Quantidade
                 </CardTitle>
                 <div className="bg-muted p-1.5 rounded">
-                  <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+                  <ShoppingCart className="h-4 w-4 text-primary" />
                 </div>
               </CardHeader>
               <CardContent>
@@ -118,7 +118,7 @@ export function VendedorSheet({
                   Ticket Médio
                 </CardTitle>
                 <div className="bg-muted p-1.5 rounded">
-                  <Target className="h-4 w-4 text-muted-foreground" />
+                  <Target className="h-4 w-4 text-primary" />
                 </div>
               </CardHeader>
               <CardContent>

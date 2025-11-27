@@ -44,7 +44,7 @@ export function Vendas() {
                 Total de Vendas
               </CardTitle>
               <div className="bg-muted p-1.5 rounded">
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
+                <DollarSign className="h-4 w-4 text-primary" />
               </div>
             </CardHeader>
             <CardContent>
@@ -63,7 +63,7 @@ export function Vendas() {
                 Total de Comissões
               </CardTitle>
               <div className="bg-muted p-1.5 rounded">
-                <Award className="h-4 w-4 text-muted-foreground" />
+                <Award className="h-4 w-4 text-primary" />
               </div>
             </CardHeader>
             <CardContent>
@@ -86,7 +86,7 @@ export function Vendas() {
                 Quantidade de Vendas
               </CardTitle>
               <div className="bg-muted p-1.5 rounded">
-                <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+                <ShoppingCart className="h-4 w-4 text-primary" />
               </div>
             </CardHeader>
             <CardContent>
@@ -105,7 +105,7 @@ export function Vendas() {
                 Ticket Médio
               </CardTitle>
               <div className="bg-muted p-1.5 rounded">
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                <TrendingUp className="h-4 w-4 text-primary" />
               </div>
             </CardHeader>
             <CardContent>

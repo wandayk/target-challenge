@@ -4,6 +4,7 @@ import { Header } from "./components/Header";
 import { Vendas } from "./pages/Vendas";
 import { Estoque } from "./pages/Estoque";
 import { Spinner } from "@/components/ui/spinner";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   const [activeTab, setActiveTab] = useState<"vendas" | "estoque">("vendas");
@@ -34,6 +35,8 @@ function App() {
           )}
         </div>
       </div>
+
+      <Toaster />
     </div>
   );
 }
