@@ -16,8 +16,8 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface HeaderProps {
-  activeTab: "vendas" | "estoque";
-  onTabChange: (tab: "vendas" | "estoque") => void;
+  activeTab: "vendas" | "estoque" | "juros";
+  onTabChange: (tab: "vendas" | "estoque" | "juros") => void;
 }
 
 export function Header({ activeTab, onTabChange }: HeaderProps) {
@@ -39,6 +39,9 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
             </TabsTrigger>
             <TabsTrigger value="estoque" className="cursor-pointer">
               Estoque
+            </TabsTrigger>
+            <TabsTrigger value="juros" className="cursor-pointer">
+              Juros
             </TabsTrigger>
           </TabsList>
         </Tabs>

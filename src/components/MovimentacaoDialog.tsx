@@ -21,6 +21,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ArrowDownCircle, ArrowUpCircle, Package } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 import type { Produto } from "@/types";
 
 interface MovimentacaoDialogProps {
@@ -145,26 +146,36 @@ export function MovimentacaoDialog({
               onValueChange={(value) => setTipo(value as "entrada" | "saida")}
               className="flex gap-4"
             >
-              <div className="flex items-center space-x-2">
+              <Label
+                htmlFor="entrada"
+                className={cn(
+                  "flex items-center space-x-2 rounded-md border px-4 py-3 cursor-pointer transition-all flex-1",
+                  tipo === "entrada"
+                    ? "border-primary bg-primary/5 shadow-sm"
+                    : "hover:bg-accent/50"
+                )}
+              >
                 <RadioGroupItem value="entrada" id="entrada" />
-                <Label
-                  htmlFor="entrada"
-                  className="flex items-center gap-2 cursor-pointer font-normal"
-                >
+                <div className="flex items-center gap-2 font-normal">
                   <ArrowUpCircle className="h-4 w-4 text-green-600" />
                   Entrada
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
+                </div>
+              </Label>
+              <Label
+                htmlFor="saida"
+                className={cn(
+                  "flex items-center space-x-2 rounded-md border px-4 py-3 cursor-pointer transition-all flex-1",
+                  tipo === "saida"
+                    ? "border-primary bg-primary/5 shadow-sm"
+                    : "hover:bg-accent/50"
+                )}
+              >
                 <RadioGroupItem value="saida" id="saida" />
-                <Label
-                  htmlFor="saida"
-                  className="flex items-center gap-2 cursor-pointer font-normal"
-                >
+                <div className="flex items-center gap-2 font-normal">
                   <ArrowDownCircle className="h-4 w-4 text-red-600" />
                   Saída
-                </Label>
-              </div>
+                </div>
+              </Label>
             </RadioGroup>
           </div>
 

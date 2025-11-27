@@ -3,14 +3,15 @@ import { useState } from "react";
 import { Header } from "./components/Header";
 import { Vendas } from "./pages/Vendas";
 import { Estoque } from "./pages/Estoque";
+import { Juros } from "./pages/Juros";
 import { Spinner } from "@/components/ui/spinner";
 import { Toaster } from "@/components/ui/sonner";
 
 function App() {
-  const [activeTab, setActiveTab] = useState<"vendas" | "estoque">("vendas");
+  const [activeTab, setActiveTab] = useState<"vendas" | "estoque" | "juros">("vendas");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleTabChange = (tab: "vendas" | "estoque") => {
+  const handleTabChange = (tab: "vendas" | "estoque" | "juros") => {
     setIsLoading(true);
     setTimeout(() => {
       setActiveTab(tab);
@@ -30,8 +31,10 @@ function App() {
             </div>
           ) : activeTab === "vendas" ? (
             <Vendas />
-          ) : (
+          ) : activeTab === "estoque" ? (
             <Estoque />
+          ) : (
+            <Juros />
           )}
         </div>
       </div>
