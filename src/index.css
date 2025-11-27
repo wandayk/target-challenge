@@ -73,7 +73,8 @@ body {
   display: flex;
   place-items: center;
   width: 100vw;
-  padding: 2rem 8rem !important;
+  padding: 0 8rem !important;
+  overflow-x: hidden !important;
 }
 
 h1 {

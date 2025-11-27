@@ -1,132 +1,138 @@
-import { useMemo } from "react";
-import vendasData from "../services/vendas.json";
-import { calcularComissao } from "../utils/calcularComissao";
-import type { Venda, VendedorComissao } from "../types";
+import { useState, useCallback } from "react";
+import { useVendedoresData } from "@/hooks/useVendedoresData";
+import { VendedoresTable } from "@/components/VendedoresTable";
+import { VendedorSheet } from "@/components/VendedorSheet";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DollarSign, TrendingUp, ShoppingCart, Award } from "lucide-react";
+import type { VendedorComissao } from "@/types";
 
 export function Vendas() {
-  const vendedoresComissao = useMemo(() => {
-    const vendedoresMap = new Map<string, VendedorComissao>();
+  const { vendedoresComissao, metricas } = useVendedoresData();
+  const [selectedVendedor, setSelectedVendedor] =
+    useState<VendedorComissao | null>(null);
+  const [selectedPosicao, setSelectedPosicao] = useState(0);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
-    vendasData.vendas.forEach((venda: Venda) => {
-      const comissao = calcularComissao(venda.valor);
+  const handleVendedorClick = useCallback(
+    (vendedor: VendedorComissao, posicao: number) => {
+      setSelectedVendedor(vendedor);
+      setSelectedPosicao(posicao);
+      setSheetOpen(true);
+    },
+    []
+  );
 
-      if (!vendedoresMap.has(venda.vendedor)) {
-        vendedoresMap.set(venda.vendedor, {
-          vendedor: venda.vendedor,
-          totalVendas: 0,
-          totalComissao: 0,
-          vendas: [],
-        });
-      }
-
-      const vendedorData = vendedoresMap.get(venda.vendedor)!;
-      vendedorData.totalVendas += venda.valor;
-      vendedorData.totalComissao += comissao;
-      vendedorData.vendas.push({
-        valor: venda.valor,
-        comissao,
-      });
-    });
-
-    return Array.from(vendedoresMap.values());
-  }, []);
+  const formatCurrency = (value: number) =>
+    value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-800">
-          Cálculo de Comissões
-        </h2>
-        <p className="text-gray-600 mt-1">
-          Comissões calculadas por vendedor seguindo as regras estabelecidas
+        <p className="text-muted-foreground font-normal tracking-tighter">
+          Análise de desempenho e comissões dos vendedores
         </p>
       </div>
 
-      <div className="grid gap-6">
-        {vendedoresComissao.map((vendedor) => (
-          <div
-            key={vendedor.vendedor}
-            className="bg-white rounded-lg border shadow-sm overflow-hidden"
-          >
-            <div className="bg-gray-50 px-6 py-4 border-b">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold text-gray-800">
-                  {vendedor.vendedor}
-                </h3>
-                <div className="text-right">
-                  <div className="text-sm text-gray-600">Total de Vendas</div>
-                  <div className="text-lg font-bold text-gray-800">
-                    {vendedor.totalVendas.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm text-gray-600">
-                    Total de Comissões
-                  </div>
-                  <div className="text-lg font-bold text-green-600">
-                    {vendedor.totalComissao.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                  </div>
-                </div>
+      {/* Layout: Cards na esquerda e Tabela na direita */}
+      <div className="flex gap-6">
+        {/* Cards de Métricas - Coluna Esquerda */}
+        <div className="flex flex-col gap-4 w-80">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0">
+              <CardTitle className="text-sm font-semibold tracking-tighter">
+                Total de Vendas
+              </CardTitle>
+              <div className="bg-muted p-1.5 rounded">
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
               </div>
-            </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {formatCurrency(metricas.totalVendas)}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Faturamento total acumulado
+              </p>
+            </CardContent>
+          </Card>
 
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 border-b">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      #
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Valor da Venda
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Comissão
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      % Comissão
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {vendedor.vendas.map((venda, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {index + 1}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {venda.valor.toLocaleString("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">
-                        {venda.comissao.toLocaleString("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {venda.comissao === 0
-                          ? "0%"
-                          : venda.valor < 500
-                          ? "1%"
-                          : "5%"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))}
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0">
+              <CardTitle className="text-sm font-semibold tracking-tighter">
+                Total de Comissões
+              </CardTitle>
+              <div className="bg-muted p-1.5 rounded">
+                <Award className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-green-600">
+                {formatCurrency(metricas.totalComissoes)}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {(
+                  (metricas.totalComissoes / metricas.totalVendas) *
+                  100
+                ).toFixed(2)}
+                % do faturamento
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0">
+              <CardTitle className="text-sm font-semibold tracking-tighter">
+                Quantidade de Vendas
+              </CardTitle>
+              <div className="bg-muted p-1.5 rounded">
+                <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {metricas.totalQuantidade}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Transações realizadas
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0">
+              <CardTitle className="text-sm font-semibold tracking-tighter">
+                Ticket Médio
+              </CardTitle>
+              <div className="bg-muted p-1.5 rounded">
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {formatCurrency(metricas.mediaVenda)}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Valor médio por venda
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Tabela de Vendedores - Ocupa restante */}
+        <VendedoresTable
+          vendedores={vendedoresComissao}
+          onVendedorClick={handleVendedorClick}
+        />
       </div>
+
+      {/* Sheet de Detalhes */}
+      <VendedorSheet
+        vendedor={selectedVendedor}
+        posicao={selectedPosicao}
+        open={sheetOpen}
+        onOpenChange={setSheetOpen}
+      />
     </div>
   );
 }

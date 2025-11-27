@@ -18,10 +18,10 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="h-screen w-full pt-[2rem]">
       <Header activeTab={activeTab} onTabChange={handleTabChange} />
 
-      <div className="flex justify-center pt-28 py-6">
+      <div className="flex justify-center pt-26 pb-0">
         <div className="mx-[0rem] w-full px-8">
           {isLoading ? (
             <div className="flex items-center justify-center py-20">
