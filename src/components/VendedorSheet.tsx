@@ -19,7 +19,6 @@ interface VendedorSheetProps {
 
 export function VendedorSheet({
   vendedor,
-  posicao,
   open,
   onOpenChange,
 }: VendedorSheetProps) {
